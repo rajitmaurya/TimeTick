@@ -1,0 +1,27 @@
+body {
+  background: #0f172a;
+  color: #fff;
+  font-family: Arial;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.clock-container {
+  text-align: center;
+}
+
+#clock {
+  font-size: 60px;
+  margin-bottom: 20px;
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  background: #38bdf8;
+  color: #000;
+  cursor: pointer;
+  border-radius: 5px;
+}
