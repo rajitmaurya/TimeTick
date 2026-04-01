@@ -25,3 +25,13 @@ button {
   cursor: pointer;
   border-radius: 5px;
 }
+
+
+.alarm-container {
+  margin-top: 20px;
+}
+
+input, button {
+  padding: 10px;
+  margin: 5px;
+}
