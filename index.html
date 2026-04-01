@@ -12,6 +12,14 @@
     <button onclick="toggleFormat()">Switch Format</button>
   </div>
 
+  <div class="alarm-container">
+  <input type="time" id="alarmTime">
+  <button onclick="setAlarm()">Set Alarm</button>
+  <button onclick="clearAlarm()">Clear Alarm</button>
+</div>
+
+<audio id="alarmSound" src="alarm.mp3"></audio>
+
   <script src="script.js"></script>
 </body>
 </html>
