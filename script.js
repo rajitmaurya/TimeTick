@@ -34,3 +34,47 @@ function toggleFormat() {
 
 // initial call
 updateClock();
+
+
+
+let alarmTime = null;
+let isAlarmSet = false;
+
+function setAlarm() {
+  const input = document.getElementById("alarmTime").value;
+  
+  if (!input) {
+    alert("Please select time!");
+    return;
+  }
+
+  alarmTime = input;
+  isAlarmSet = true;
+  alert("Alarm set for " + alarmTime);
+}
+
+function clearAlarm() {
+  alarmTime = null;
+  isAlarmSet = false;
+  document.getElementById("alarmSound").pause();
+  alert("Alarm cleared!");
+}
+
+function updateClock() {
+  const now = new Date();
+
+  let hours = now.getHours().toString().padStart(2, "0");
+  let minutes = now.getMinutes().toString().padStart(2, "0");
+  let seconds = now.getSeconds().toString().padStart(2, "0");
+
+  document.getElementById("clock").innerText =
+    `${hours}:${minutes}:${seconds}`;
+
+  // Alarm check
+  if (isAlarmSet && `${hours}:${minutes}` === alarmTime) {
+    document.getElementById("alarmSound").play();
+    isAlarmSet = false; // ek baar hi chale
+  }
+}
+
+setInterval(updateClock, 1000);
