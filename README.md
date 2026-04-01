@@ -16,4 +16,4 @@ A simple and elegant digital clock built using HTML, CSS, and JavaScript.
 (Add screenshot here)
 
 ## 🌐 Live Demo
-(Add Netlify/Vercel link)
+(https://rajitmaurya.github.io/TimeTick/)
