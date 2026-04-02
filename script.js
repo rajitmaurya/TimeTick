@@ -75,6 +75,12 @@ function updateClock() {
     document.getElementById("alarmSound").play();
     isAlarmSet = false; // ek baar hi chale
   }
+
+  // Snooze check
+if (snoozeTime && `${hours}:${minutes}` === snoozeTime) {
+  document.getElementById("alarmSound").play();
+  snoozeTime = null;
+}
 }
 
 setInterval(updateClock, 1000);
