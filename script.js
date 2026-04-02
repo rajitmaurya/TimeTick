@@ -1,5 +1,5 @@
 let is24Hour = true;
-
+let snoozeTime = null;
 function updateClock() {
   const now = new Date();
 
@@ -78,3 +78,18 @@ function updateClock() {
 }
 
 setInterval(updateClock, 1000);
+
+function snoozeAlarm() {
+  if (!alarmTime) return;
+
+  const now = new Date();
+  now.setMinutes(now.getMinutes() + 5);
+
+  let hours = now.getHours().toString().padStart(2, "0");
+  let minutes = now.getMinutes().toString().padStart(2, "0");
+
+  snoozeTime = `${hours}:${minutes}`;
+
+  document.getElementById("alarmSound").pause();
+  alert("Snoozed for 5 minutes 😴");
+}
