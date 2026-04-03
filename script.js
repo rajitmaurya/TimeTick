@@ -37,7 +37,7 @@ function toggleFormat() {
 // SOUND TOGGLE
 function toggleSound() {
   soundOn = !soundOn;
-  alert(soundOn ? "Sound ON 🔊" : "Sound OFF 🔇");
+  alert(soundOn ? "Sound ON 🔊" : "Sound OFF ");
 }
 
 // ADD ALARM
@@ -58,7 +58,7 @@ function renderAlarms() {
     list.innerHTML += `
       <li>
         ${alarm}
-        <button onclick="deleteAlarm(${index})">❌</button>
+        <button onclick="deleteAlarm(${index})"> Edit </button>
         <button onclick="snooze(${index})"></button>
       </li>
     `;
