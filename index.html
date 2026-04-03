@@ -2,25 +2,26 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Digital Clock</title>
+  <title>TimeTick Pro</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <div class="clock-container">
-    <h1 id="clock">00:00:00</h1>
-    <button onclick="toggleFormat()">Switch Format</button>
+<div class="container">
+  <h1 id="clock">00:00:00</h1>
+
+  <div class="controls">
+    <input type="time" id="alarmTime">
+    <button onclick="addAlarm()">Add Alarm</button>
+    <button onclick="toggleFormat()">12/24</button>
+    <button onclick="toggleSound()">🔊</button>
   </div>
 
-  <div class="alarm-container">
-  <input type="time" id="alarmTime">
-  <button onclick="setAlarm()">Set Alarm</button>
-  <button onclick="clearAlarm()">Clear Alarm</button>
+  <ul id="alarmList"></ul>
 </div>
 
 <audio id="alarmSound" src="alarm.mp3"></audio>
-<button onclick="snoozeAlarm()">Snooze (5 min)</button>
 
-  <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
