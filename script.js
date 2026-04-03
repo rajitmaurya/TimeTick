@@ -1,101 +1,120 @@
 let is24Hour = true;
-let snoozeTime = null;
+let alarms = [];
+let soundOn = true;
+
+// CLOCK
 function updateClock() {
   const now = new Date();
 
-  let hours = now.getHours();
-  let minutes = now.getMinutes();
-  let seconds = now.getSeconds();
+  let h = now.getHours();
+  let m = now.getMinutes();
+  let s = now.getSeconds();
 
   let ampm = "";
 
   if (!is24Hour) {
-    ampm = hours >= 12 ? " PM" : " AM";
-    hours = hours % 12 || 12;
+    ampm = h >= 12 ? " PM" : " AM";
+    h = h % 12 || 12;
   }
 
-  // Add leading zero
-  hours = hours.toString().padStart(2, "0");
-  minutes = minutes.toString().padStart(2, "0");
-  seconds = seconds.toString().padStart(2, "0");
+  h = String(h).padStart(2, "0");
+  m = String(m).padStart(2, "0");
+  s = String(s).padStart(2, "0");
 
   document.getElementById("clock").innerText =
-    `${hours}:${minutes}:${seconds}${ampm}`;
+    `${h}:${m}:${s}${ampm}`;
+
+  checkAlarms(`${h}:${m}`);
 }
 
-// update every second
 setInterval(updateClock, 1000);
 
-// format toggle
+// FORMAT TOGGLE
 function toggleFormat() {
   is24Hour = !is24Hour;
-  updateClock();
 }
 
-// initial call
-updateClock();
-
-
-
-let alarmTime = null;
-let isAlarmSet = false;
-
-function setAlarm() {
-  const input = document.getElementById("alarmTime").value;
-  
-  if (!input) {
-    alert("Please select time!");
-    return;
-  }
-
-  alarmTime = input;
-  isAlarmSet = true;
-  alert("Alarm set for " + alarmTime);
+// SOUND TOGGLE
+function toggleSound() {
+  soundOn = !soundOn;
+  alert(soundOn ? "Sound ON 🔊" : "Sound OFF 🔇");
 }
 
-function clearAlarm() {
-  alarmTime = null;
-  isAlarmSet = false;
-  document.getElementById("alarmSound").pause();
-  alert("Alarm cleared!");
+// ADD ALARM
+function addAlarm() {
+  const time = document.getElementById("alarmTime").value;
+  if (!time) return alert("Select time");
+
+  alarms.push(time);
+  renderAlarms();
 }
 
-function updateClock() {
-  const now = new Date();
+// DISPLAY ALARMS
+function renderAlarms() {
+  const list = document.getElementById("alarmList");
+  list.innerHTML = "";
 
-  let hours = now.getHours().toString().padStart(2, "0");
-  let minutes = now.getMinutes().toString().padStart(2, "0");
-  let seconds = now.getSeconds().toString().padStart(2, "0");
+  alarms.forEach((alarm, index) => {
+    list.innerHTML += `
+      <li>
+        ${alarm}
+        <button onclick="deleteAlarm(${index})">❌</button>
+        <button onclick="snooze(${index})"></button>
+      </li>
+    `;
+  });
+}
 
-  document.getElementById("clock").innerText =
-    `${hours}:${minutes}:${seconds}`;
+// DELETE
+function deleteAlarm(index) {
+  alarms.splice(index, 1);
+  renderAlarms();
+}
 
-  // Alarm check
-  if (isAlarmSet && `${hours}:${minutes}` === alarmTime) {
+// CHECK ALARMS
+function checkAlarms(currentTime) {
+  alarms.forEach((alarm, index) => {
+    if (alarm === currentTime) {
+      triggerAlarm(index);
+    }
+  });
+}
+
+// TRIGGER
+function triggerAlarm(index) {
+  if (soundOn) {
     document.getElementById("alarmSound").play();
-    isAlarmSet = false; // ek baar hi chale
   }
 
-  // Snooze check
-if (snoozeTime && `${hours}:${minutes}` === snoozeTime) {
-  document.getElementById("alarmSound").play();
-  snoozeTime = null;
+  showNotification("Alarm!", "Wake up!");
+
+  // remove after ringing
+  alarms.splice(index, 1);
+  renderAlarms();
 }
-}
 
-setInterval(updateClock, 1000);
-
-function snoozeAlarm() {
-  if (!alarmTime) return;
-
+// SNOOZE
+function snooze(index) {
   const now = new Date();
   now.setMinutes(now.getMinutes() + 5);
 
-  let hours = now.getHours().toString().padStart(2, "0");
-  let minutes = now.getMinutes().toString().padStart(2, "0");
+  let h = String(now.getHours()).padStart(2, "0");
+  let m = String(now.getMinutes()).padStart(2, "0");
 
-  snoozeTime = `${hours}:${minutes}`;
+  alarms[index] = `${h}:${m}`;
+  renderAlarms();
 
-  document.getElementById("alarmSound").pause();
-  alert("Snoozed for 5 minutes 😴");
+  alert("Snoozed 5 min ");
+}
+
+// NOTIFICATION
+function showNotification(title, body) {
+  if (Notification.permission === "granted") {
+    new Notification(title, { body });
+  }
+}
+
+// REQUEST PERMISSION
+if ("Notification" in window) {
+  Notification.requestPermission();
 }
