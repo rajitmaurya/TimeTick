@@ -1,37 +1,46 @@
 body {
-  background: #0f172a;
+  margin: 0;
+  background: #000;
   color: #fff;
-  font-family: Arial;
+  font-family: -apple-system, BlinkMacSystemFont;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
 }
 
-.clock-container {
+.container {
   text-align: center;
 }
 
 #clock {
-  font-size: 60px;
-  margin-bottom: 20px;
+  font-size: 80px;
+  font-weight: 300;
+  letter-spacing: 2px;
 }
 
-button {
-  padding: 10px 20px;
-  border: none;
-  background: #38bdf8;
-  color: #000;
-  cursor: pointer;
-  border-radius: 5px;
-}
-
-
-.alarm-container {
+.controls {
   margin-top: 20px;
 }
 
 input, button {
   padding: 10px;
   margin: 5px;
+  border-radius: 8px;
+  border: none;
+}
+
+button {
+  background: #1c1c1e;
+  color: white;
+  cursor: pointer;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  margin-top: 10px;
 }
